@@ -6,19 +6,19 @@
 % skydel.                                                                 %
 % Some file names may need to be renamed.                                 %
 % The file transmitter Transmitter 1 will always need to be be renamed.   %
+% Latest change
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clearvars % Clear all previous variables
 clc
 warning('off'); % Removes the warning captions from extracting table data
-restoredefaultpath
 spoofYorN = input('Is there spoof data: ','s');
+restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
 ubxfilename = 'Lift_off_spoofing.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
-
-addpath sim\                            
+                           
 addpath Extract_NavSol/navFunctions/    
 addpath Extract_NavSol/extrapFunctions       
 addpath Extract_NavSol/geoFunctions          
@@ -65,7 +65,7 @@ GALno = []; %stores the names of which Galileo satelittes are to be used
 
 for i=1:32
     n = sprintf('%02d',i);
-    filename = ('L1CA '+string(n)+'.csv');
+    filename = ('Signals/GPS_Signals/L1CA '+string(n)+'.csv');
     if exist(filename) == 2;
         data{i} = readtable(filename);
             if rad2deg(mean(table2array(data{i}(:,9)))) >= 15
@@ -124,7 +124,7 @@ end
 
 for i=1:34
     n = sprintf('%02d',i);
-    filename = ('E1 '+string(n)+'.csv');
+    filename = ('Signals/GAL_Signals/E1 '+string(n)+'.csv');
     if exist(filename) == 2;
         data{i} = readtable(filename);
             if rad2deg(mean(table2array(data{i}(:,9)))) >= 15
@@ -187,7 +187,7 @@ end
 % the user to whether or not this exists and can be used. Data is then
 % loaded into the struct reciever.
 
-if exist('receiver_antenna.csv')==2;
+if exist('Signals/receiver_antenna.csv')==2;
     temp = table2array(readtable('receiver_antenna.csv'));
     fprintf("Reciever_Antenna file found, data loaded\n")
     reciever.ECEFx = temp(6:10:end,2);
@@ -215,7 +215,7 @@ end
 %****************************JAMMER DATA**********************************%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Jammer csv file logged at 100hz.
-if exist('transmitter Transmitter 1.csv') == 2;
+if exist('Signals/transmitter Transmitter 1.csv') == 2;
     temp = readtable('transmitter Transmitter 1.csv');
     fprintf("Jammer transmitter file found, data loaded\n")
     Jammer.ECEFx = table2array(temp(503:1000:end,2));
@@ -274,7 +274,7 @@ if spoofYorN == "yes"
 
     for i=1:32
         n = sprintf('%02d',i);
-        filename = ('L1CA '+string(n)+'.csv');
+        filename = ('Signals/SPF_Signals/L1CA '+string(n)+'.csv');
         if exist(filename) == 2;
             data{i} = readtable(filename);
                 if rad2deg(mean(table2array(data{i}(:,9)))) >= 15
