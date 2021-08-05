@@ -1,8 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 SKYDEL RAW DATA EXTRACTION FROM SIMULATION              %
 % Authors:          Matlab-Matt Alcock, Alex Schofield                    %
-% This is a github test
-% Matt is a poopy pants
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This script is designed to extract and use the raw data csv files from  %
 % skydel.                                                                 %
