@@ -16,10 +16,6 @@ restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
 ubxfilename = 'Lift_off_spoofing.ubx';
-<<<<<<< HEAD
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
-                                         
-=======
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -27,7 +23,6 @@ addpath Extract_NavSol/navFunctions/
 addpath Extract_NavSol/extrapFunctions       
 addpath Extract_NavSol/geoFunctions          
                                             
->>>>>>> eeaa90255a1979e7b0c0992344da3c5de047c2a9
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables to be declared, where being empty is important to the script
 GPSno = []; %stores the names of which GPS satelittes are to be used
