@@ -1,4 +1,4 @@
-function [satSolutions, navSolutions] = NavSol(GPSsat, GPSno)
+function [satSolutions, navSolutions, spfSolutions,SpoofnavSolutions] = NavSol_GALGPS(simSat, spoofSat, satno,spoofno)
 %Function calculates navigation solutions for the receiver (pseudoranges,
 %positions). At the end it converts coordinates from the WGS84 system to
 %the UTM, geocentric or any additional coordinate system.
@@ -52,9 +52,9 @@ function [satSolutions, navSolutions] = NavSol(GPSsat, GPSno)
 
 
 c = 299792458;
-sampleTime = length(GPSsat.Index);
+sampleTime = length(simSat.Index);
 
-if (sampleTime < 36) || length(GPSno) <= 4
+if (sampleTime < 36) || length(satno) <= 4
     % Show the error message and exit
     disp('Record is to short or too few satellites tracked to calcuolate position');
     navSolutions = [];
@@ -63,12 +63,12 @@ if (sampleTime < 36) || length(GPSno) <= 4
 end
 
 %% Check if the number of satellites is still above 3 =====================
-prnList = GPSno;
-%spfList = spoofno;
-NoSats = length(GPSno);
-%NoSpoofs = length(spoofno);
+prnList = satno;
+spfList = spoofno;
+NoSats = length(satno);
+NoSpoofs = length(spoofno);
 activeChnList = [1:NoSats];
-%activeSpoofList = [1:NoSpoofs];
+activeSpoofList = [1:NoSpoofs];
 
 if (isempty(prnList) || (length(prnList) < 4))
     % Show error message and exit
@@ -98,7 +98,7 @@ end
 %% Initialization of current measurement ==================================
 
 for currMeasNr = 1:sampleTime
-    TOW = GPSsat.gpsToW(currMeasNr,1);
+    TOW = simSat.gpsToW(currMeasNr,1);
     transmitTime = TOW;  
         
 %% Save list of satellites used for position calculation ==================
@@ -106,18 +106,18 @@ for currMeasNr = 1:sampleTime
         satSolutions(satNR).PRN = prnList(satNR);
 %% Find elevation and azimuth angle of each satellite =====================        
      
-        satSolutions(satNR).az(:, currMeasNr) = GPSsat.bodyAzimuth(currMeasNr,satNR);
-        satSolutions(satNR).el(:,currMeasNr) = GPSsat.bodyElevation(currMeasNr,satNR);
+        satSolutions(satNR).az(:, currMeasNr) = simSat.bodyAzimuth(currMeasNr,satNR);
+        satSolutions(satNR).el(:,currMeasNr) = simSat.bodyElevation(currMeasNr,satNR);
     
 
 %% Find pseudoranges and correct for sat clcok error ======================
       
-        satSolutions(satNR).rawP(:, currMeasNr) = GPSsat.pseudoRange(currMeasNr,:)+GPSsat.satClockCorr(currMeasNr,:)*c;
+        satSolutions(satNR).rawP(:, currMeasNr) = simSat.pseudoRange(currMeasNr,:)+simSat.satClockCorr(currMeasNr,:)*c;
         satRange = satSolutions(satNR).rawP(:, currMeasNr);
     end
 %% Find satellites positions ==============================================
         
-        [satpos] = satpos_matt(transmitTime, GPSno, GPSsat, currMeasNr);
+        [satpos] = satpos_matt(transmitTime, satno, simSat, currMeasNr);
     
 %% Find receiver position =================================================
 
@@ -129,11 +129,11 @@ for currMeasNr = 1:sampleTime
        
         
         freqforcal=zeros(1,length(prnList));
-        freqforcal=GPSsat.dopplerFreq(currMeasNr,:);
+        freqforcal=simSat.dopplerFreq(currMeasNr,:);
                
         
-        [posvel, dop] = leastSquarePosVelSat(satpos, satRange, ...
-                                            freqforcal, c, currMeasNr, GPSsat, GPSno);
+        [posvel, navSolutions.DOP] = leastSquarePosVelSat(satpos, satRange, ...
+                                            freqforcal, c, currMeasNr, simSat, satno);
 %--- Save results ---------------------------------------------------------
         
         navSolutions.X(currMeasNr)  = posvel(1);
@@ -144,13 +144,6 @@ for currMeasNr = 1:sampleTime
         navSolutions.vY(currMeasNr)  = posvel(6);
         navSolutions.vZ(currMeasNr)  = posvel(7);
         navSolutions.ddt(currMeasNr) = posvel(8);
-        navSolutions.Gdop(currMeasNr) = dop(1);
-        navSolutions.Pdop(currMeasNr) = dop(2);
-        navSolutions.Hdop(currMeasNr) = dop(3);
-        navSolutions.Vdop(currMeasNr) = dop(4);
-        navSolutions.Tdop(currMeasNr) = dop(5);
-       
-        
 
 %% Correct pseudorange measurements for Rx clocks error ===================
     for satNR = 1:NoSats
@@ -169,19 +162,17 @@ for currMeasNr = 1:sampleTime
         %excluded automatically in all plots. For DOP it is easier to use
         %zeros. NaN values might need to be excluded from results in some
         %of further processing to obtain correct results.
-        navSolutions.X(currMeasNr)  = NaN;
-        navSolutions.Y(currMeasNr)  = NaN;
-        navSolutions.Z(currMeasNr)  = NaN;
-        navSolutions.dt(currMeasNr) = NaN;
-        navSolutions.vX(currMeasNr)  = NaN;
-        navSolutions.vY(currMeasNr)  = NaN;
-        navSolutions.vZ(currMeasNr)  = NaN;
-        navSolutions.ddt(currMeasNr) = NaN;
-        navSolutions.Gdop(currMeasNr) = NaN;
-        navSolutions.Pdop(currMeasNr) = NaN;
-        navSolutions.Hdop(currMeasNr) = NaN;
-        navSolutions.Vdop(currMeasNr) = NaN;
-        navSolutions.Tdop(currMeasNr) = NaN;   
+        navSolutions.X(currMeasNr)           = NaN;
+        navSolutions.Y(currMeasNr)           = NaN;
+        navSolutions.Z(currMeasNr)           = NaN;
+        navSolutions.dt(currMeasNr)          = NaN;
+        navSolutions.DOP(:, currMeasNr)      = zeros(5, 1);
+        navSolutions.latitude(currMeasNr)    = NaN;
+        navSolutions.longitude(currMeasNr)   = NaN;
+        navSolutions.height(currMeasNr)      = NaN;
+        navSolutions.E(currMeasNr)           = NaN;
+        navSolutions.N(currMeasNr)           = NaN;
+        navSolutions.U(currMeasNr)           = NaN;    
 
     end % if size(prnList, 2) > 3
 
@@ -225,7 +216,7 @@ for currMeasNr = 1:sampleTime
         
 %% Find satellites positions ==============================================
         
-        [spoofpos] = satpos_matt(transmitTime, GPSno, spoofSat, currMeasNr);
+        [spoofpos] = spfpos_matt(transmitTime, satno, spoofSat, currMeasNr);
     
 %% Find receiver position =================================================
 
@@ -238,8 +229,8 @@ for currMeasNr = 1:sampleTime
             freqforcal=zeros(1,length(prnList));
             freqforcal=spoofSat.dopplerFreq(currMeasNr,:);
         
-            [posvel, SpoofnavSolutions.DOP] = leastSquarePosVelSat(spoofpos, satRange, ...
-                                            freqforcal, c, currMeasNr, spoofSat, GPSno);
+            [posvel, SpoofnavSolutions.DOP] = leastSquarePosVelSpf(spoofpos, satRange, ...
+                                            freqforcal, c, currMeasNr, spoofSat, satno);
 %--- Save results ---------------------------------------------------------
         
             SpoofnavSolutions.X(currMeasNr)  = posvel(1);
@@ -282,7 +273,22 @@ for currMeasNr = 1:sampleTime
         SpoofnavSolutions.U(currMeasNr)           = NaN;    
 
         end % if size(spfList, 2) > 3
-    
+    else % if exist(spoof)
+        %--- Set the missing solutions to NaN. These results will be
+        %excluded automatically in all plots. For DOP it is easier to use
+        %zeros. NaN values might need to be excluded from results in some
+        %of further processing to obtain correct results.
+        navSolutions.X(currMeasNr)           = NaN;
+        navSolutions.Y(currMeasNr)           = NaN;
+        navSolutions.Z(currMeasNr)           = NaN;
+        navSolutions.dt(currMeasNr)          = NaN;
+        navSolutions.DOP(:, currMeasNr)      = zeros(5, 1);
+        navSolutions.latitude(currMeasNr)    = NaN;
+        navSolutions.longitude(currMeasNr)   = NaN;
+        navSolutions.height(currMeasNr)      = NaN;
+        navSolutions.E(currMeasNr)           = NaN;
+        navSolutions.N(currMeasNr)           = NaN;
+        navSolutions.U(currMeasNr)           = NaN; 
         
     end % if exist(spoof)
     %=== Update the transmit time ("measurement time") ====================

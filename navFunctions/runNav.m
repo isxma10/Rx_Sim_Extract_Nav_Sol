@@ -1,10 +1,10 @@
 %% Calculate navigation solutions =========================================
     disp('   Calculating navigation solutions...');
-    navSolutions = postNavigation(trackResults, settings);
+    [satSolutions, navSolutions] =  NavSol(GPSsat, GPSno);
 
     disp('   Processing is complete for this data block');
     
-     save('navSolutions', 'navSolutions');
+     %save('navSolutions', 'navSolutions');
      
-     plotNavigation(navSolutions, settings);
-fuckeded fuck fuck
+    % plotNavigation(navSolutions, settings);
+
