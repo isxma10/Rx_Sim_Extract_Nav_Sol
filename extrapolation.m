@@ -10,6 +10,7 @@
 clearvars % Clear all previous variables
 clc
 warning('off'); % Removes the warning captions from extracting table data
+restoredefaultpath
 spoofYorN = input('Is there spoof data: ','s');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
