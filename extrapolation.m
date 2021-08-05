@@ -15,14 +15,8 @@ spoofYorN = input('Is there spoof data: ','s');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
 ubxfilename = 'Lift_off_spoofing.ubx';
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%--- Include folders with functions ---------------------------------------
-
-addpath sim\                            
-addpath Extract_NavSol/navFunctions/    
-addpath Extract_NavSol/extrapFunctions       
-addpath Extract_NavSol/geoFunctions          
-                                            
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+                                         
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables to be declared, where being empty is important to the script
 GPSno = []; %stores the names of which GPS satelittes are to be used
