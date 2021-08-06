@@ -1,4 +1,4 @@
-function [posvel, dop] = leastSquarePosVelSat(satpos, obs, freqforcal, c, currMeasNr, simSat, satno)
+function [posvel, dop] = leastSquarePosVelSat(satpos, obs, freqforcal, c, currMeasNr, GPSsat, satno)
 %Function calculates the Least Square Solution.
 %
 %[pos, el, az, dop] = leastSquarePos(satpos, obs, settings);
@@ -64,8 +64,8 @@ for iter = 1:nmbOfIterations
 
         %--- Calculate tropo and Ionospheric corrections ------------------
 
-            trop = simSat.tropoCorr(currMeasNr,i);
-            ion = simSat.ionoCorr(currMeasNr,i);
+            trop = GPSsat.tropoCorr(currMeasNr,i);
+            ion = GPSsat.ionoCorr(currMeasNr,i);
 %                    
         end % if iter == 1 ... ... else
 
@@ -118,7 +118,7 @@ posvel=[pos,vel'];
 %--- Initialize output ------------------------------------------------
 dop     = zeros(1, 5);
 
-if nargout  == 4
+%if nargout  == 4
    
 
     %--- Calculate DOP ----------------------------------------------------
