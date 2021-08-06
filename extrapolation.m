@@ -15,13 +15,13 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'Lift_off_spoofing.ubx';
+ubxfilename = 'Static_GPS_GAL.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
-addpath Extract_NavSol/navFunctions/    
-addpath Extract_NavSol/extrapFunctions       
-addpath Extract_NavSol/geoFunctions          
+addpath navFunctions    
+addpath extrapFunctions       
+addpath geoFunctions          
                                             
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Variables to be declared, where being empty is important to the script
