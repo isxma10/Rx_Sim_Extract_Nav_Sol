@@ -65,7 +65,8 @@ for currMeasNr = 1:sampleTime
         
         if satNR <=  no_GPS_meas
            
-            GNSS_measurements(satNR,1) = GPSsat.pseudoRange(currMeasNr,satNR);
+            GNSS_measurements(satNR,1) = GPSsat.pseudoRange(currMeasNr,satNR)+GPSsat.satClockCorr(currMeasNr,satNR)*c;
+            % Sat clock correction (from ephemeris) included in psuedoRange
             GNSS_measurements(satNR,2) = GPSsat.psrRate(currMeasNr,satNR);
             GNSS_measurements(satNR,3) = GPSsat.ECEFx(currMeasNr,satNR);
             GNSS_measurements(satNR,4) = GPSsat.ECEFy(currMeasNr,satNR);
