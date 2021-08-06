@@ -1,4 +1,4 @@
-function [satPositions] = satpos_matt(transmitTime, satno, simSat, currMeasNr)
+function [satPositions] = satpos_matt(transmitTime, satno, GPSsat, currMeasNr)
 %% Initialize constants ===================================================
 numOfSatellites = length(satno);
 
@@ -14,16 +14,16 @@ for satNr = 1 : numOfSatellites
     
     %--- Compute satellite coordinates ------------------------------------
     
-    x = simSat.ECEFx(currMeasNr,satNr);
-    y = simSat.ECEFy(currMeasNr,satNr);
-    z = simSat.ECEFz(currMeasNr,satNr);
+    x = GPSsat.ECEFx(currMeasNr,satNr);
+    y = GPSsat.ECEFy(currMeasNr,satNr);
+    z = GPSsat.ECEFz(currMeasNr,satNr);
     
     %--- Compute Sattelite velocities--------------------------------------
 
     if currMeasNr > 1
-        Vx = (x-simSat.ECEFx(currMeasNr-1,satNr))/1000;
-        Vy = (y-simSat.ECEFy(currMeasNr-1,satNr))/1000;
-        Vz = (z-simSat.ECEFz(currMeasNr-1,satNr))/1000;
+        Vx = (x-GPSsat.ECEFx(currMeasNr-1,satNr));
+        Vy = (y-GPSsat.ECEFy(currMeasNr-1,satNr));
+        Vz = (z-GPSsat.ECEFz(currMeasNr-1,satNr));
     else
         Vx = 0;
         Vy = 0;

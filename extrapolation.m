@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'Static_GPS_GAL.ubx';
+ubxfilename = 'boobies.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -175,7 +175,7 @@ if and(length(GPSno) < 4,length(GALno) < 4)
     fprintf('3 or less satelittes are utilised in this data.\n')
     fprintf('This is not sufficient and new data must be obtianed\n');
     fprintf('Script ended here\n')
-    return
+    %return
 end
 
 
@@ -208,7 +208,7 @@ if exist('Signals/receiver_antenna.csv')==2;
 else
     fprintf("Reciever_Antenna file found empty, no data to be loaded\n")
     fprintf("Please check the file name is correct\nTerminating script\n")
-    return
+    %return
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -332,7 +332,7 @@ end
 % 
 % subplot(2,2,2);
 % plot(time(60:end),ubxreciever.Residual(60:end,:))
-
+restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of script
 fprintf("Script finished\n")
