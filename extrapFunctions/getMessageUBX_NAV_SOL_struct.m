@@ -243,49 +243,17 @@ dataOut.C_over_N0_1 = C_over_N0_1;
 dataOut.Residual = Residual;
 dataOut.pos = pos;
 dataOut.vel = vel;
-dataOut.nb_sv_used = nb_sv_used';
-% dataOut.C_over_N0_2_1 = C_over_N0_2_1;
-% dataOut.Ranges_1 = Ranges_1;
-% dataOut.Phase_meas_1 = Phase_meas_1;
-% dataOut.Doppler_1 = Doppler_1;
-dataOut.Used_GNSS_1 = Used_GNSS_1';
+dataOut.C_over_N0_2_1 = C_over_N0_2_1;
+dataOut.Ranges_1 = Ranges_1;
+dataOut.Phase_meas_1 = Phase_meas_1;
+dataOut.Doppler_1 = Doppler_1;
+%dataOut.Used_GNSS_1 = Used_GNSS_1;
 dataOut.rcv_tow = nonzeros(rcv_tow');
 %dataOut.eph_1 = eph_1;
 %dataOut.eph_2 = eph_2;
-%dataOut.clock_bias = clock_bias;
-%dataOut.clock_drift = clock_drift;
-%dataOut.usable_sats = usable_sats;
-% dataOut.Std_ranges_1 = Std_ranges_1;
-% dataOut.Std_doppler_1 = Std_doppler_1;
+dataOut.clock_bias = clock_bias;
+dataOut.clock_drift = clock_drift;
+dataOut.usable_sats = usable_sats;
+dataOut.Std_ranges_1 = Std_ranges_1;
+dataOut.Std_doppler_1 = Std_doppler_1;
 dataOut.agc = agc / 83; % /83 to make info comparable with the ucentre table
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Following sections removes columns contianing all NaN's and converts    %
-% NaN to 0                                                                %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% dataOut.C_over_N0_2_1(isnan(dataOut.C_over_N0_2_1))=0; %converts NaN to 0
-% dataOut.C_over_N0_2_1( :, ~any(dataOut.C_over_N0_2_1,1) ) = [];  %deltes columns of all 0
-% 
-% dataOut.Ranges_1(isnan(dataOut.Ranges_1))=0; %converts NaN to 0
-% dataOut.Ranges_1( :, ~any(dataOut.Ranges_1,1) ) = [];  %deltes columns of all 0
-
-% dataOut.Used_GNSS_1(isnan(dataOut.Used_GNSS_1))=1; %converts NaN to 1
-% dataOut.Used_GNSS_1=~dataOut.Used_GNSS_1; %Creates the inverse of the matrix
-% dataOut.Used_GNSS_1( :, ~any(dataOut.Used_GNSS_1,1) ) = [];  %deltes columns of all 0
-
-% dataOut.Doppler_1(isnan(dataOut.Doppler_1))=1; %converts NaN to 1
-% dataOut.Doppler_1=~dataOut.Doppler_1; %Creates the inverse of the matrix
-% dataOut.Doppler_1( :, ~any(dataOut.Doppler_1,1) ) = [];  %deltes columns of all 0
-
-% dataOut.Std_ranges_1(isnan(dataOut.Std_ranges_1))=0; %converts NaN to 0
-% dataOut.Std_ranges_1( :, ~any(dataOut.Std_ranges_1,1) ) = [];  %deltes columns of all 0
-% 
-% dataOut.Std_doppler_1(isnan(dataOut.Std_doppler_1))=0; %converts NaN to 0
-% dataOut.Std_doppler_1( :, ~any(dataOut.Std_doppler_1,1) ) = [];  %deltes columns of all 0
-% 
-% dataOut.Doppler_1(isnan(dataOut.Doppler_1))=0; %converts NaN to 0
-% dataOut.Doppler_1( :, ~any(dataOut.Doppler_1,1) ) = [];  %deltes columns of all 0
-% 
-% dataOut.Phase_meas_1(isnan(dataOut.Phase_meas_1))=0; %converts NaN to 0
-% dataOut.Phase_meas_1( :, ~any(dataOut.Phase_meas_1,1) ) = [];  %deltes columns of all 0
