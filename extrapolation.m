@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'boobies.ubx';
+ubxfilename = 'Lift_off_spoofing.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -243,16 +243,15 @@ SampleTime = index(end);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Retrieves the data from the UBX file. Combines iTOW and fTOW to TOW.
 %Interpolates the data.
-ubxreciever.TOW = ubxreciever.iTOWe-3 + ubxreciever.fTOWe-9;
 if exist(ubxfilename) == 2
     fprintf("loading UBX data.........")
     [ubxreciever] = getMessageUBX_NAV_SOL_struct(ubxfilename);
     ubxreciever.pos = ubxreciever.pos/100;
     ubxreciever = the_interpolator(ubxreciever);
-    intReciever.ECEF(:,1)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFx(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
-    intReciever.ECEF(:,2)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFy(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
-    intReciever.ECEF(:,3)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFz(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
-    deviation = (intReciever.ECEF - ubxreciever.pos);
+%     intReciever.ECEF(:,1)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFx(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
+%     intReciever.ECEF(:,2)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFy(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
+%     intReciever.ECEF(:,3)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFz(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
+%     deviation = (intReciever.ECEF - ubxreciever.pos);
     fprintf("UBX data loaded successfully\n")
 else
     fprintf("No UBX file found, please check file name\n")
