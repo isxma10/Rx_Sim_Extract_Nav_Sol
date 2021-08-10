@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'Lift_off_spoofing.ubx';
+ubxfilename = 'jamming_adjustable_power.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -188,7 +188,7 @@ end
 % loaded into the struct reciever.
 
 if exist('Signals/receiver_antenna.csv')==2;
-    temp = table2array(readtable('receiver_antenna.csv'));
+    temp = table2array(readtable('Signals/receiver_antenna.csv'));
     fprintf("Reciever_Antenna file found, data loaded\n")
     reciever.ECEFx = temp(6:10:end,2);
     reciever.ECEFy = temp(6:10:end,3);
@@ -216,7 +216,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Jammer csv file logged at 100hz.
 if exist('Signals/transmitter Transmitter 1.csv') == 2;
-    temp = readtable('transmitter Transmitter 1.csv');
+    temp = readtable('Signals/transmitter Transmitter 1.csv');
     fprintf("Jammer transmitter file found, data loaded\n")
     Jammer.ECEFx = table2array(temp(503:1000:end,2));
     Jammer.ECEFy = table2array(temp(503:1000:end,3));
