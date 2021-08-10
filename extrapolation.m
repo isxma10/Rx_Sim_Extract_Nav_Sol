@@ -243,6 +243,7 @@ SampleTime = index(end);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Retrieves the data from the UBX file. Combines iTOW and fTOW to TOW.
 %Interpolates the data.
+ubxreciever.TOW = ubxreciever.iTOWe-3 + ubxreciever.fTOWe-9;
 if exist(ubxfilename) == 2
     fprintf("loading UBX data.........")
     [ubxreciever] = getMessageUBX_NAV_SOL_struct(ubxfilename);
