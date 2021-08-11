@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'Dynamic_jam_transistioning_towards_5dB.ubx';
+ubxfilename = 'awgn_dynamic_jam_5dB.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -314,24 +314,7 @@ if spoofYorN == "yes"
 else
     fprintf("No spoof data found\n")
 end    
-    % Plots and figures
-% time = ubxreciever.TOW-ubxreciever.TOW(1,1);
-% subplot(2,1,2);  
-% plot(time(60:end,1),deviation(60:end,:))
-% legend('ECEFx', 'ECEFy', 'ECEFz')
-% title('Deviation of reciever position to true position')
-% 
-% 
-% subplot(2,1,2);
-% plot(time(60:end),ubxreciever.agc(60:end),'b','linewidth',3)
-% hold on
-% plot(time(60:end),ubxreciever.C_over_N0_1(60:end,:))
-% legend('AGC','Avg C over N0 1')
-% title('Avg C over N0 1 and AGC over time')
-% hold off
-% 
-% subplot(2,2,2);
-% plot(time(60:end),ubxreciever.Residual(60:end,:))
+   
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of script

@@ -2,6 +2,7 @@
 
 close all
 time = ubxreciever.TOW-ubxreciever.TOW(1,1);
+figure(201)
 subplot(2,2,1);  
 plot(time(60:end),(deviation(60:end,:))')
 xticks(30:60:time(end))
