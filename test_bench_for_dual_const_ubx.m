@@ -1,14 +1,14 @@
 clearvars 
 
-fileName = 'Gal_GPS_static_test.ubx' %GAL and GPS
-%fileName = 'Gal_static.ubx' %Gal only
+addpath Extract_NavSol/navFunctions
+addpath Extract_NavSol/extrapFunctions
+addpath Extract_NavSol/geoFunctions
 
+fileName = 'sim/Gal_GPS_static_test.ubx' %GAL and GPS
+%fileName = 'Gal_static.ubx' %Gal only
 
 fid = fopen(fileName, 'rb'); % open the file for reading
 fseek(fid, 0, 'bof');
-
-
-SYNC1 = fread(fid, 1,  'uint8'); %first line read is SYNC1
 
 %% ------------------------------------------------------------------------
 % States the required variables for 0
@@ -23,7 +23,7 @@ flag_check_EPH_1=0;
 messageCount = 0; %Used to index which row the data is to be loaded at
 
 while ~feof(fid)
-    
+SYNC1 = fread(fid, 1,  'uint8'); %first line read is SYNC1    
     if SYNC1 == 181 %Once SYNC1 is declared the following can be loaded       
         SYNC2 = fread(fid, 1, 'uint8');
         class = fread(fid, 1, 'uint8');
@@ -49,30 +49,32 @@ while ~feof(fid)
                     
                 elseif ((class == 2) && (ID == 21) && messageCount>0)      % UBX-RXM-RAWX - Multi-GNSS raw measurement data
                     
-                    rcvTow(messageCount,:)      = fread(fid, 1, 'uint8');  % Reciever time of the week             
-                    week(messageCount,:)        = fread(fid, 1,  'ubit2'); % GPS week number in receiver local time.           
-                    LeapS(messageCount,:)       = fread(fid, 1,  'ubit1'); % GPS leap seconds (GPS-UTC)             
-                    numMeas(messageCount,:)     = fread(fid, 1,  'ubit1'); % Number of measurements to follow            
-                    recStat(messageCount,:)     = fread(fid, 1,  'ubit1'); % recStat Receiver tracking status bitfield               
-                    reserved1(messageCount,:)   = fread(fid, 1,  'ubit3'); % reserved for later use (not used)
+                    mLength = fread(fid,1, 'uint16');                      % Message length
+                    size = (mLength - 16)/32;                              % Used to determine how many for loop iterations are required
+                    rcvTow(messageCount,:)      = fread(fid, 1, 'double');  % Reciever time of the week             
+                    week(messageCount,:)        = fread(fid, 1,  'uint16'); % GPS week number in receiver local time           
+                    LeapS(messageCount,:)       = fread(fid, 1,  'signed char'); % GPS leap seconds (GPS-UTC)             
+                    numMeas(messageCount,:)     = fread(fid, 1,  'uchar'); % Number of measurements to follow            
+                    recStat(messageCount,:)     = fread(fid, 1,  'uchar'); % recStat Receiver tracking status bitfield               
+                    reserved1(messageCount,:)   = fread(fid, 3,  'uchar'); % reserved for later use (not used)
                     
-                    for i = 1:32
+                    for i = 1:numMeas(end);
                         
-                        prMes(messageCount,i)    = fread(fid, 1,  'uint8');% Pseudorange measurement [m]. 
-                        cpMes(messageCount,i)    = fread(fid, 1,  'uint8');% Carrier phase measurement [cycles]              
-                        doMes(messageCount,i)    = fread(fid, 1,  'ubit4');% Doppler measurement (positive sign for approaching satellites) [Hz]                                           
-                        gnssId(messageCount,i)   = fread(fid, 1,  'ubit1');% GNSS identifier                                            
-                        svId(messageCount,i)     = fread(fid, 1,  'ubit1');% Satellite identifier
-                        freqId(messageCount,i)   = fread(fid, 1,  'ubit3');% Only used for GLONASS: This is the frequency slot + 7 (range from 0 to 13)
-                        lockTime(messageCount,i) = fread(fid, 1,  'ubit2');% Carrier phase locktime counter (maximum 64500ms)
-                        cno(messageCount,i)      = fread(fid, 1,  'ubit1');% Carrier-to-noise density ratio (signal strength) [dB-Hz]
-                        prStdev(messageCount,i)  = fread(fid, 1,  'ubit1');% Estimated pseudorange measurement standard deviation
-                        cpStdev(messageCount,i)  = fread(fid, 1,  'ubit1');% Estimated carrier phase measurement standard deviation (note a raw value of 0x0F indicates the value is invalid) (
-                        doStdev(messageCount,i)  = fread(fid, 1,  'ubit1');% Estimated Doppler measurementstandard deviation
-                        trkStat(messageCount,i)  = fread(fid, 1,  'ubit1');% Tracking status bitfield
-                        reserved3(messageCount,i)= fread(fid, 1,  'ubit1');% reserved for later use (not used)
+                        prMes(messageCount,i)    = fread(fid, 1,  'double');% Pseudorange measurement [m]. 
+                        cpMes(messageCount,i)    = fread(fid, 1,  'double');% Carrier phase measurement [cycles]              
+                        doMes(messageCount,i)    = fread(fid, 1,  'single');% Doppler measurement (positive sign for approaching satellites) [Hz]                                           
+                        gnssId(messageCount,i)   = fread(fid, 1,  'uchar');% GNSS identifier                                            
+                        svId(messageCount,i)     = fread(fid, 1,  'uchar');% Satellite identifier
+                        freqId(messageCount,i)   = fread(fid, 1,  'uchar');% Only used for GLONASS: This is the frequency slot + 7 (range from 0 to 13)
+                        lockTime(messageCount,i) = fread(fid, 1,  'uint16');% Carrier phase locktime counter (maximum 64500ms)
+                        cno(messageCount,i)      = fread(fid, 1,  'uchar');% Carrier-to-noise density ratio (signal strength) [dB-Hz]
+                        prStdev(messageCount,i)  = fread(fid, 1,  'int8');% Estimated pseudorange measurement standard deviation
+                        cpStdev(messageCount,i)  = fread(fid, 1,  'int8');% Estimated carrier phase measurement standard deviation (note a raw value of 0x0F indicates the value is invalid) (
+                        doStdev(messageCount,i)  = fread(fid, 1,  'int8');% Estimated Doppler measurementstandard deviation
+                        trkStat(messageCount,i)  = fread(fid, 1,  'int8');% Tracking status bitfield
+                        reserved3(messageCount,i)= fread(fid, 1,  'uchar');% reserved for later use (not used)
                         
-                    end
+                     end
                     ChecksumA = fread(fid, 1,  'ubit1');                   % Not used can be check the integrity of the data
                     ChecksumB = fread(fid, 1,  'ubit1');                   % Not used can be check the integrity of the data
                 end
