@@ -1,4 +1,4 @@
-function [est_r_ea_e,est_v_ea_e,est_clock] = GNSS_LS_position_velocity(...
+function [est_r_ea_e,est_r_lla,est_v_ea_e,est_clock] = GNSS_LS_position_velocity(...
     GNSS_measurements,no_GNSS_meas,predicted_r_ea_e,predicted_v_ea_e)
 %GNSS_LS_position_velocity - Calculates position, velocity, clock offset, 
 %and clock drift using unweighted iterated least squares. Separate
@@ -83,6 +83,7 @@ end % while
 
 % Set outputs to estimates
 est_r_ea_e(1:3,1) = x_est(1:3);
+est_r_lla = ecef2lla(est_r_ea_e(1:3,1)','WGS84');
 est_clock(1) = x_est(4);
 
 % VELOCITY AND CLOCK DRIFT

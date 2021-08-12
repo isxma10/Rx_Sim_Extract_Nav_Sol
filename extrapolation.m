@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'chirp_dynamic_jam_5dB.ubx';
+ubxfilename = 'boobies.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -248,6 +248,7 @@ if exist(ubxfilename) == 2
     [ubxreciever] = getMessageUBX_NAV_SOL_struct(ubxfilename);
     ubxreciever.pos = ubxreciever.pos/100;
     ubxreciever = the_interpolator(ubxreciever);
+    
     intReciever.ECEF(:,1)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFx(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
     intReciever.ECEF(:,2)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFy(1:length(reciever.GPSTOW),1),ubxreciever.TOW);
     intReciever.ECEF(:,3)= interp1(reciever.GPSTOW(1:end,1),reciever.ECEFz(1:length(reciever.GPSTOW),1),ubxreciever.TOW);

@@ -85,7 +85,8 @@ for currMeasNr = 1:sampleTime
             
         else
             
-            GNSS_measurements(satNR,1) = GALsat.pseudoRange(currMeasNr,(satNR-no_GPS_meas));
+            GNSS_measurements(satNR,1) = GALsat.pseudoRange(currMeasNr,(satNR-no_GPS_meas))+GALsat.satClockCorr(currMeasNr,satNR-no_GPS_meas)*c;
+            % Sat clock correction (from ephemeris) included in psuedoRange
             GNSS_measurements(satNR,2) = GALsat.psrRate(currMeasNr,satNR-no_GPS_meas);
             GNSS_measurements(satNR,3) = GALsat.ECEFx(currMeasNr,satNR-no_GPS_meas);
             GNSS_measurements(satNR,4) = GALsat.ECEFy(currMeasNr,satNR-no_GPS_meas);
@@ -116,7 +117,7 @@ for currMeasNr = 1:sampleTime
 %-Multi-Constellation
     else
         
-        [est_r_ea_e,est_r_lla,est_r_e,est_r_n,est_r_u,est_v_ea_e,est_clock,est_intTB,el,az, dop] = INTGNSS_LS_position_velocity(...
+        [est_r_ea_e,est_r_lla,est_v_ea_e,est_clock,est_intTB,el,az, dop] = INTGNSS_LS_position_velocity(...
             GNSS_measurements,no_GNSS_meas,no_GAL_meas,predicted_r_ea_e,predicted_v_ea_e);
     
     end
@@ -127,9 +128,9 @@ for currMeasNr = 1:sampleTime
     navSolutions.Y(currMeasNr)          = est_r_ea_e(2);
     navSolutions.Z(currMeasNr)          = est_r_ea_e(3);
     navSolutions.dt(currMeasNr)         = est_clock(1);
-%     navSolutions.lat(currMeasNr)        = est_r_lla(1);
-%     navSolutions.long(currMeasNr)       = est_r_lla(2);
-%     navSolutions.alt(currMeasNr)        = est_r_lla(3);
+    navSolutions.lat(currMeasNr)        = est_r_lla(1);
+    navSolutions.long(currMeasNr)       = est_r_lla(2);
+    navSolutions.alt(currMeasNr)        = est_r_lla(3);
 %     navSolutions.east(currMeasNr)       = est_r_e;
 %     navSolutions.north(currMeasNr)      = est_r_n;
 %     navSolutions.up(currMeasNr)         = est_r_u;
