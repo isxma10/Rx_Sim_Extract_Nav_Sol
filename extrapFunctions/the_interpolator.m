@@ -14,7 +14,7 @@ for i = 1:length(fields)
     ubxreciever.(fields{i}) = ubxreciever.(fields{i})(60:end,:);
     ubxreciever.(fields{i}) = interp1(ubxreciever.(fields{i})(:,:),index,'linear','extrap');
 end
-time = (ubxreciever.iTOW(60:end) - (ubxreciever.iTOW(60)-1000))*1e-3;
+time = (ubxreciever.iTOW - (ubxreciever.iTOW(1)-1000))*1e-3;
 ubxreciever.time = time;
 
 % for i = 1:length(fields)
