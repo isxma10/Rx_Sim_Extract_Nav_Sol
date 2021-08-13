@@ -1,10 +1,10 @@
 clearvars 
 
-addpath Extract_NavSol/navFunctions
-addpath Extract_NavSol/extrapFunctions
-addpath Extract_NavSol/geoFunctions
+addpath navFunctions
+addpath extrapFunctions
+addpath geoFunctions
 
-fileName = 'sim/Gal_GPS_static_test.ubx' %GAL and GPS
+fileName = 'Static_GPS_GAL.ubx'; %GAL and GPS
 %fileName = 'Gal_static.ubx' %Gal only
 
 fid = fopen(fileName, 'rb'); % open the file for reading

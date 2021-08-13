@@ -3,7 +3,7 @@
 
 function [ubxreciever] = the_interpolator(ubxreciever)
 
-index = 1:(length(ubxreciever.iTOW)-60)
+index = 1:(length(ubxreciever.iTOW)-60);
 
 fields = fieldnames(ubxreciever);
 

@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'boobies.ubx';
+ubxfilename = 'awgn_chirp_dynamic_0dB.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -237,8 +237,7 @@ end
 % creates an index from the elasped time in seconds. Creates a new variable
 % sample time for the total time recored
 
-index = ((sat{GPSno(1)}(:,1)))/1000;
-SampleTime = index(end);
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Retrieves the data from the UBX file. Combines iTOW and fTOW to TOW.
