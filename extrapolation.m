@@ -15,7 +15,7 @@ spoofYorN = input('Is there spoof data: ','s');
 restoredefaultpath
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   PLEASE ENTER UBX FILENAME HERE                        
-ubxfilename = 'chirp_dynamic_jam_5dB.ubx';
+ubxfilename = 'boobies.ubx';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--- Include folders with functions ---------------------------------------
                            
@@ -251,6 +251,7 @@ if exist(ubxfilename) == 2
     intReciever.ECEF(:,1)= interp1(reciever.GPSTOW(60:end,1),reciever.ECEFx(60:length(reciever.GPSTOW),1),ubxreciever.TOW);
     intReciever.ECEF(:,2)= interp1(reciever.GPSTOW(60:end,1),reciever.ECEFy(60:length(reciever.GPSTOW),1),ubxreciever.TOW);
     intReciever.ECEF(:,3)= interp1(reciever.GPSTOW(60:end,1),reciever.ECEFz(60:length(reciever.GPSTOW),1),ubxreciever.TOW);
+
     deviation = (intReciever.ECEF - ubxreciever.pos);
     fprintf("UBX data loaded successfully\n")
 else

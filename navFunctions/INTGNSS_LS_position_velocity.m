@@ -1,4 +1,4 @@
-function [est_r_ea_e,est_r_lla,est_r_e,est_r_n,est_r_u,est_v_ea_e,est_clock,est_intTB,el,az, dop] = INTGNSS_LS_position_velocity(...
+function [est_r_ea_e,est_r_lla,est_v_ea_e,est_clock,est_intTB,el,az, dop] = INTGNSS_LS_position_velocity(...
     GNSS_measurements,no_GNSS_meas,no_GAL_meas,predicted_r_ea_e,predicted_v_ea_e)
 %INTGNSS_LS_position_velocity - Calculates position, velocity, clock offset, 
 %and clock drift using unweighted iterated least squares. Separate
@@ -138,15 +138,10 @@ end % while
 
 % Set outputs to estimates
 est_r_ea_e(1:3,1) = x_est(1:3);
-x_esti = est_r_ea_e(1);
-y_esti = est_r_ea_e(2);
-z_esti = est_r_ea_e(3);
 est_r_lla = ecef2lla(est_r_ea_e(1:3,1)','WGS84');
-lat_est = est_r_lla(1);
-long_est = est_r_lla(2);
-alt_est = est_r_lla(3);
 
-[est_r_e,est_r_n,est_r_u] = ecef2enu(x_esti, y_esti, z_esti, lat_est, long_est, alt_est, wgs84);
+
+
 est_clock(1) = x_est(4);
 est_intTB(1) = x_est(5);
 

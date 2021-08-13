@@ -1,7 +1,7 @@
  % Plots and figures
 
 close all
-time = ubxreciever.time
+time = ubxreciever.time;
 figure(201)
 subplot(2,2,1);  
 plot(time(1:end),(deviation(1:end,:))')
